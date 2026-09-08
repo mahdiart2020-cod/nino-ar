@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Memanggil teknologi tampilan 3D (A-Frame) -->
+    <script src="https://aframe.io"></script>
+    <!-- Memanggil teknologi pelacak gambar (MindAR) -->
+    <script src="https://jsdelivr.net"></script>
+
+    <script>
+      // Logika agar video otomatis berputar saat gambar terdeteksi kamera
+      AFRAME.registerComponent('video-controller', {
+        init: function () {
+          const video = document.querySelector('#ninoVideo');
+          this.el.addEventListener('targetFound', event => {
+            video.play(); // Video menyala otomatis saat gambar terlihat
+          });
+          this.el.addEventListener('targetLost', event => {
+            video.pause(); // Video otomatis terjeda saat kamera menjauh
+          });
+        }
+      });
+    </script>
+  </head>
+  <body style="margin: 0; overflow: hidden;">
+
+    <!-- KODE YANG ANDA MAKSUD SUDAH TERPASANG SEMPURNA DI SINI -->
+    <a-scene mindar-image="imageTargetSrc: targets.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+      
+      <a-assets>
+        <!-- Memanggil file video animasi MP4 Anda -->
+        <video id="ninoVideo" src="nino-petualangan.mp4" preload="auto" loop="true" response-type="arraybuffer" crossorigin="anonymous" playsinline webkit-playsinline></video>
+      </a-assets>
+
+      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+      <!-- Mengunci posisi video tepat menempel di atas permukaan cetakan gambar fisik -->
+      
+        <a-video src="#ninoVideo" width="1" height="1.4" position="0 0 0" rotation="0 0 0"></a-video>
+      
+
+    </a-scene>
+
+  </body>
+</html>
